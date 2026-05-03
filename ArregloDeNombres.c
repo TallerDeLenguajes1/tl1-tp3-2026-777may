@@ -22,6 +22,7 @@ int main()
         strcpy(V[i], Buff);
     }
     MostrarPersonas(V);
+    // BuscarNombre(3,V);
     
     
     return 0;
