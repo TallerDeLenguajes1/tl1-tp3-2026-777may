@@ -7,6 +7,7 @@
 #define CantNombres 5
 
 void MostrarPersonas(char* vector[]);
+void BuscarNombre(unsigned int ID, char* vector[]);
 
 int main()
 {
@@ -30,5 +31,15 @@ void MostrarPersonas(char* vector[]){
     {
         printf("El %d° nombre es: %s\n", i+1, vector[i]);
     }
-
+    
+}
+void BuscarNombre(unsigned int ID, char* vector[]){
+    if (ID < CantNombres)
+    {
+        printf("\nEl nombre del ID %d es: %s", ID, vector[ID]);
+    }else{
+        printf("\nNo se encontro el valor buscado.\n");
+    }
+    
+    
 }
