@@ -1,3 +1,5 @@
+// Git Branch <>, Checkout <> y Commit
+// Git Merge y Git Rebase
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
