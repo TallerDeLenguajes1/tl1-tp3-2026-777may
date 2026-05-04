@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <ctype.h>
 
 #define MaxClientes 5
@@ -23,7 +24,7 @@
         int ClienteID; // Numerado en el ciclo iterativo
         char *NombreCliente; // Ingresado por usuario
     int CantidadProductosAPedir; // (aleatorio entre 1 y 5)
-    Producto *Productos //El tamaño de este arreglo depende de //*@var CantidadProductosAPedir *// 
+    Producto *Productos; //El tamaño de este arreglo depende de //*@var CantidadProductosAPedir *// 
     }Cliente;
 //
 float costoTotalDeUnProducto(Producto prod);
@@ -49,13 +50,24 @@ int main()
         //Crear y cargar los clientes
         Cliente* clientes = crearCliente(cantidadDeClientes);
         cargarCliente(clientes);
-        //
+        //*Pruebas
+        for (int i = 0; i < cantidadDeClientes; i++)
+        {
+            printf("\n Cliente n° %d, nombre %10s.\n CantProd %d, punteroProd %p\n", clientes[i].ClienteID, clientes[i].NombreCliente, clientes[i].CantidadProductosAPedir, clientes[i].Productos);
+            for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
+            {
+                printf("\n ID %d, cant %d, tipo %10s , precio %f.\n", clientes[i].Productos[j].ProductoID, clientes[i].Productos[j].Cantidad, clientes[i].Productos[j].TipoProducto, clientes[i].Productos[j].PrecioUnitario);
+            }
+        }
+        //*
         
     }
     //Fin del programa
     printf("Adios.");
     return 0;
 }
+
+
 void cargarProducto(Producto* lista, int ultimoID){
     //Recibe una lista de productos y crea y/o carga sus atributos
     int tama = sizeof(lista)/sizeof(Producto);
@@ -89,7 +101,7 @@ void cargarProducto(Producto* lista, int ultimoID){
 }
 void cargarCliente(Cliente* lista){
     //Recive una lista de clientes y crea y/o carga sus atributos
-    int tama = size_of(lista)/sizeof(Cliente);
+    int tama = sizeof(lista)/sizeof(Cliente);
     char Buff[100];
     int cantidad;
     int IDProducto = -1;
