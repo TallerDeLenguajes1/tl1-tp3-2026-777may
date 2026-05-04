@@ -31,6 +31,8 @@ float costoTotalDeUnProducto(Producto prod);
 Cliente* crearCliente(int cantidad);
 void cargarCliente(Cliente* lista, int tama);
 void cargarProducto(Producto* lista, int tama, int ultimoID);
+void mostarTodo(Cliente* listaClientes, int cantClientes);
+
 
 int main()
 {
@@ -50,17 +52,7 @@ int main()
         //Crear y cargar los clientes
         Cliente* clientes = crearCliente(cantidadDeClientes);
         cargarCliente(clientes, cantidadDeClientes);
-        // //*Pruebas
-        // for (int i = 0; i < cantidadDeClientes; i++)
-        // {
-        //     printf("\n Cliente ID %d, nombre %8s\n CantProd %d, punteroProd %p\n", clientes[i].ClienteID, clientes[i].NombreCliente, clientes[i].CantidadProductosAPedir, clientes[i].Productos);
-        //     for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
-        //     {
-        //         printf("\n ID %d, cant %d, tipo %10s , precio %f.\n", clientes[i].Productos[j].ProductoID, clientes[i].Productos[j].Cantidad, clientes[i].Productos[j].TipoProducto, clientes[i].Productos[j].PrecioUnitario);
-        //     }
-        // }
-        // //*
-        
+        mostarTodo(clientes, cantidadDeClientes);
     }
     //Fin del programa
     printf("Adios.");
@@ -68,6 +60,29 @@ int main()
 }
 
 
+void mostarTodo(Cliente* listaClientes, int cantClientes){
+    Cliente auxC;
+    Producto auxP;
+    float totalAPagar, totalProducto;
+    for (int i = 0; i < cantClientes; i++)
+    {
+        totalAPagar = 0;
+        auxC = listaClientes[i];
+        printf("\n------------------------------------------------------------------------------------------\n");
+        printf("\nCliente n° %d, ID: %d, Nombre: %s", i+1, auxC.ClienteID, auxC.NombreCliente);
+        printf("\nEl cliente lleva %d productos: \n", auxC.CantidadProductosAPedir);
+        for (int j = 0; j < auxC.CantidadProductosAPedir; j++)
+        {
+            auxP = auxC.Productos[j];
+            totalProducto = costoTotalDeUnProducto(auxP);
+            printf("  %d  %s por %d unidades, ID del producto %d\n", j+1 , auxP.TipoProducto, auxP.Cantidad, auxP.ProductoID);
+            printf("      Precio por unidad: %.3f, total del producto: %.3f\n\n", auxP.PrecioUnitario, totalProducto);
+            totalAPagar += totalProducto;
+        }
+        
+        printf("        -- El total a pagar por el cliente es: %.3f -- \n\n", totalAPagar);
+    }
+}
 void cargarProducto(Producto* lista, int tama, int ultimoID){
     //Recibe una lista de productos y crea y/o carga sus atributos
     int cantidad;
