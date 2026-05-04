@@ -29,37 +29,37 @@
 //
 float costoTotalDeUnProducto(Producto prod);
 Cliente* crearCliente(int cantidad);
-void cargarCliente(Cliente* lista);
-void cargarProducto(Producto* lista,int ultimoID);
+void cargarCliente(Cliente* lista, int tama);
+void cargarProducto(Producto* lista, int tama, int ultimoID);
 
 int main()
 {
-    int cantidadDeClientes;
-    //Solicitar numero valido de clientes
-    printf("Bienvenido.\n Porfavor ingrese la cantidad de clientes:\n");
-    scanf("%d", cantidadDeClientes);
-    while (cantidadDeClientes>MaxClientes || cantidadDeClientes<0)
-    {
-        printf("Numero invalido, porfavor ingrese la cantidad de clientes:\n");
-        scanf("%d", cantidadDeClientes);
-    }
-    //Trabajar con los clientes
+    int cantidadDeClientes = 1;
     while (cantidadDeClientes!= 0)
     {
+        //Trabajar con los clientes
         srand(time(NULL));
+        //Solicitar numero valido de clientes
+        printf("Bienvenido.\n Porfavor ingrese la cantidad de clientes:\n");
+        scanf("%d", &cantidadDeClientes);
+        while (cantidadDeClientes>MaxClientes || cantidadDeClientes<0)
+        {
+            printf("Numero invalido, porfavor ingrese la cantidad de clientes:\n");
+            scanf("%d", &cantidadDeClientes);
+        }
         //Crear y cargar los clientes
         Cliente* clientes = crearCliente(cantidadDeClientes);
-        cargarCliente(clientes);
-        //*Pruebas
-        for (int i = 0; i < cantidadDeClientes; i++)
-        {
-            printf("\n Cliente n° %d, nombre %10s.\n CantProd %d, punteroProd %p\n", clientes[i].ClienteID, clientes[i].NombreCliente, clientes[i].CantidadProductosAPedir, clientes[i].Productos);
-            for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
-            {
-                printf("\n ID %d, cant %d, tipo %10s , precio %f.\n", clientes[i].Productos[j].ProductoID, clientes[i].Productos[j].Cantidad, clientes[i].Productos[j].TipoProducto, clientes[i].Productos[j].PrecioUnitario);
-            }
-        }
-        //*
+        cargarCliente(clientes, cantidadDeClientes);
+        // //*Pruebas
+        // for (int i = 0; i < cantidadDeClientes; i++)
+        // {
+        //     printf("\n Cliente ID %d, nombre %8s\n CantProd %d, punteroProd %p\n", clientes[i].ClienteID, clientes[i].NombreCliente, clientes[i].CantidadProductosAPedir, clientes[i].Productos);
+        //     for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
+        //     {
+        //         printf("\n ID %d, cant %d, tipo %10s , precio %f.\n", clientes[i].Productos[j].ProductoID, clientes[i].Productos[j].Cantidad, clientes[i].Productos[j].TipoProducto, clientes[i].Productos[j].PrecioUnitario);
+        //     }
+        // }
+        // //*
         
     }
     //Fin del programa
@@ -68,9 +68,8 @@ int main()
 }
 
 
-void cargarProducto(Producto* lista, int ultimoID){
+void cargarProducto(Producto* lista, int tama, int ultimoID){
     //Recibe una lista de productos y crea y/o carga sus atributos
-    int tama = sizeof(lista)/sizeof(Producto);
     int cantidad;
     int aux;
     for (int i = 0; i < tama; i++)
@@ -94,14 +93,13 @@ void cargarProducto(Producto* lista, int ultimoID){
                 aux = rand() % 1000;
             }
             //
-        lista[i].PrecioUnitario = (float)cantidad + (float)(aux/1000);
+        lista[i].PrecioUnitario = (float)aux/1000 + cantidad;
         //
     }
     //
 }
-void cargarCliente(Cliente* lista){
+void cargarCliente(Cliente* lista, int tama){
     //Recive una lista de clientes y crea y/o carga sus atributos
-    int tama = sizeof(lista)/sizeof(Cliente);
     char Buff[100];
     int cantidad;
     int IDProducto = -1;
@@ -114,10 +112,10 @@ void cargarCliente(Cliente* lista){
         lista[i].CantidadProductosAPedir = cantidad;
         //Crear y cargar lista de productos segun su cantidad
         lista[i].Productos = (Producto*) malloc(sizeof(Producto)* cantidad);
-        cargarProducto(lista[i].Productos, IDProducto);
+        cargarProducto(lista[i].Productos, cantidad, IDProducto);
         IDProducto += cantidad;
         //Ingreso nombre de cliente
-        printf("\nIngrese el nombre del %d° cliente:", i+1);
+        printf("\nIngrese el nombre del %d° cliente:\n", i+1);
         fflush(stdin);
             //Si overflow entonces cierra todo
             if (!fgets(Buff, sizeof(Buff),stdin)){
