@@ -124,6 +124,5 @@ Cliente* crearCliente(int cantidad){
     return lista;
 }
 float costoTotalDeUnProducto(Producto prod){
-    
-    return;
+    return prod.Cantidad * prod.PrecioUnitario;
 }
